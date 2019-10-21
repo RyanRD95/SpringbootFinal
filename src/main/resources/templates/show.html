@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="base :: navlinks"></div>
+<a href="/"><button type="button" class="btn-primary">Show All Messages</button></a><br />
+Content :<p th:text="${chat.content}"></p><br />
+Date Sent :<span th:text="${chat.date}"></span><br />
+Sent By :<span th:text="${chat.sentBy}"></span>
+<a th:href="@{/delete/{id}(id=${chat.id})}"><button type="button" class="btn-primary">Delete this Message</button></a>
+<div th:replace="base :: footer"></div>
+</body>
+</html>

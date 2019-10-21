@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h1>Welcome to the SpringBoot Chat!</h1>
+<div th:replace="base :: navlinks"></div>
+<a href="/add"><button type="button" class="btn-primary">Add a new Chat</button> </a><br />
+<table>
+    <tr>
+        <th>Content</th>
+        <th>Date Sent</th>
+        <th>Sent By</th>
+    </tr>
+    <tr th:each="chat : ${chats}">
+        <td th:text="${chat.content}"></td>
+        <td th:text="${chat.date}"></td>
+        <td th:text="${chat.sentBy}"></td>
+        <td>
+            <a th:href="@{/update/{id}(id=${chat.id})}"><button type="button" class="btn-primary">Update</button> </a>
+            <a th:href="@{/detail/{id}(id=${chat.id})}"><button type="button" class="btn-primary">Details</button> </a>
+            <a th:href="@{/delete/{id}(id=${chat.id})}"><button type="button" class="btn-primary">Delete</button> </a>
+        </td>
+    </tr>
+</table>
+<div th:replace="base :: footer"></div>
+</body>
+</html>
