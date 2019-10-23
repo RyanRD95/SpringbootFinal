@@ -7,12 +7,19 @@
 </head>
 <body>
 <div th:replace="base :: navlinks"></div>
+<div class="jumbotron">
 <a href="/"><button type="button" class="btn-primary">Show All Messages</button></a><br />
-Content :<p th:text="${chat.content}"></p><br />
+    <h1 class="dispaly-4">Sent By :<span th:text="${chat.sentBy}"></span></h1><br />
+    <p class="lead"> Content :<p th:text="${chat.content}"></p></p><br />
 Date Sent :<span th:text="${chat.date}"></span><br />
-Sent By :<span th:text="${chat.sentBy}"></span>
+
+Pic :<div th:if="${chat.pic} !=  null">
+    <img th:src="${chat.pic}" />
+    </div>
+<br />
 <a th:href="@{/update/{id}(id=${chat.id})}"><button type="button" class="btn-primary">Update this Message</button> </a>
 <a th:href="@{/delete/{id}(id=${chat.id})}"><button type="button" class="btn-primary">Delete this Message</button></a>
+</div>
 <div th:replace="base :: footer"></div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

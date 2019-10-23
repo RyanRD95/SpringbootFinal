@@ -1,19 +1,24 @@
 package com.example.demo;
 
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.util.Map;
 
 @Controller
 public class HomeController {
     @Autowired
     ChatRepository chatRepository;
+
+    @Autowired
+    CloudinaryConfig cloudc;
 
     @RequestMapping("/")
     public String index(Model model){
@@ -27,14 +32,6 @@ public class HomeController {
         return "chatForm";
     }
 
-    @PostMapping("/process")
-    public String processForm(@Valid Chat chat, BindingResult result){
-        if (result.hasErrors()){
-            return "chatForm";
-        }
-        chatRepository.save(chat);
-        return "redirect:/";
-    }
 
     @RequestMapping("/detail/{id}")
     public String showChat(@PathVariable("id") long id, Model model){
@@ -51,6 +48,27 @@ public class HomeController {
     @RequestMapping("/delete/{id}")
     public String delChat(@PathVariable("id") long id){
         chatRepository.deleteById(id);
+        return "redirect:/";
+    }
+
+
+    @PostMapping("/process")
+    public String processChat(@ModelAttribute Chat chat,
+                              @RequestParam("file")MultipartFile file){
+        if (file.isEmpty()){
+            chatRepository.save(chat);
+            return "redirect:/";
+        }
+        try {
+            Map uploadResult = cloudc.upload(file.getBytes(),
+                    ObjectUtils.asMap("resourcetype", "auto"));
+            chat.setPic(uploadResult.get("url").toString());
+
+        } catch (IOException e){
+            e.printStackTrace();
+            return "redirect:/add";
+        }
+        chatRepository.save(chat);
         return "redirect:/";
     }
 }

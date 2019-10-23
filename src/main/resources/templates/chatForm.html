@@ -8,7 +8,7 @@
 <body>
 <div th:replace="base :: navlinks"></div>
 <h1>Start Chatting</h1>
-<form action="#" th:action="@{/process}" th:object="${chat}" method="post">
+<form action="#" th:action="@{/process}" th:object="${chat}" method="post" enctype="multipart/form-data">
     <input class="form-control" type="hidden" th:field="*{id}" />
     Write Your Message :<textarea rows="4" class="form-control" th:field="*{content}" />
     <span th:if="${#fields.hasErrors('content')}"
@@ -19,8 +19,10 @@
     Sent By :<input class="form-control" type="text" th:field="*{sentBy}">
     <span th:if="${#fields.hasErrors('sentBy')}"
           th:errors="*{sentBy}"></span> <br />
+   Enter a Picture: <input class="form-control" type="file" name="file"  />
+   <input type="hidden" th:field="*{pic}">
     <br/>
-    <input type="submit" value="Submit" />
+    <input class="form-control" type="submit" value="Submit" />
 </form>
 
 <div th:replace="base :: footer"></div>

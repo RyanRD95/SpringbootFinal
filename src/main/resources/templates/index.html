@@ -14,7 +14,9 @@
 
 <div th:each="chat : ${chats}">
 <div class="card" style="width: 18rem;">
-   <!-- <img class="card-img-top" src=".../100px180/" alt="Card image cap"> -->
+    <div th:if="${chat.pic} != null">
+        <img class="card-img-top" th:src="${chat.pic}" />
+    </div>
     <div class="card-body">
         <h5 class="card-title" th:text="${chat.sentBy}"></h5>
         <p class="card-text" th:text="${chat.content}"></p>

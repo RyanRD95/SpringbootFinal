@@ -26,6 +26,8 @@ public class Chat {
     @Size(min=5)
     private String sentBy;
 
+    private String pic;
+
     public long getId() {
         return id;
     }
@@ -56,5 +58,13 @@ public class Chat {
 
     public void setSentBy(String sentBy) {
         this.sentBy = sentBy;
+    }
+
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
     }
 }
